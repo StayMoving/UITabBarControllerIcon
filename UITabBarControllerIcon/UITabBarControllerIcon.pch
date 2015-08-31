@@ -1,0 +1,24 @@
+//
+//  UITabBarControllerIcon.pch
+//  UITabBarControllerIcon
+//
+//  Created by YouXianMing on 15/8/31.
+//  Copyright (c) 2015年 YouXianMing. All rights reserved.
+//
+
+#ifndef UITabBarControllerIcon_UITabBarControllerIcon_pch
+#define UITabBarControllerIcon_UITabBarControllerIcon_pch
+
+/*--------------------------------------------------------
+ * $(SRCROOT)/$(PROJECT_NAME)/UITabBarControllerIcon.pch *
+ --------------------------------------------------------*/
+
+#import <Availability.h>
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "WxHxD.h"
+#endif
+
+#endif

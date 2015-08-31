@@ -7,17 +7,99 @@
 //
 
 #import "AppDelegate.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
+#import "ThirdViewController.h"
+#import "NSString+RenderingMode.h"
+#import "UIColor+CreateImage.h"
+
 
 @interface AppDelegate ()
 
 @end
 
+
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    self.window                 = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self setupWithWindow:self.window];
+    [self.window makeKeyAndVisible];
+    
     return YES;
+}
+
+- (void)setupWithWindow:(UIWindow *)window {
+    
+    FirstViewController  *firstController  = [[FirstViewController alloc] init];
+    SecondViewController *secondController = [[SecondViewController alloc] init];
+    ThirdViewController  *thirdController  = [[ThirdViewController alloc] init];
+    
+#pragma mark - 设置tabBarItem中的图片以及标题
+#if 1
+    
+    // 设置tabBarItem中的图片以及标题
+    firstController.tabBarItem  = [[UITabBarItem alloc] initWithTitle:@"Camera"
+                                                                image:[@"Camera" originalRenderImage]
+                                                        selectedImage:[@"Camera_high" originalRenderImage]];
+    secondController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Clock"
+                                                                image:[@"Clock" originalRenderImage]
+                                                        selectedImage:[@"Clock_high" originalRenderImage]];
+    thirdController.tabBarItem  = [[UITabBarItem alloc] initWithTitle:@"SmartPhone"
+                                                                image:[@"SmartPhone" originalRenderImage]
+                                                        selectedImage:[@"SmartPhone_high" originalRenderImage]];
+#else
+    
+    // 设置tabBarItem中的图片以及标题
+    firstController.tabBarItem  = [[UITabBarItem alloc] initWithTitle:@"Camera"
+                                                                image:[@"Camera" defaultRenderImage]
+                                                        selectedImage:[@"Camera_high" defaultRenderImage]];
+    secondController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Clock"
+                                                                image:[@"Clock" defaultRenderImage]
+                                                        selectedImage:[@"Clock_high" defaultRenderImage]];
+    thirdController.tabBarItem  = [[UITabBarItem alloc] initWithTitle:@"SmartPhone"
+                                                                image:[@"SmartPhone" defaultRenderImage]
+                                                        selectedImage:[@"SmartPhone_high" defaultRenderImage]];
+    
+#endif
+    
+    
+    // 设置文本样式 (UIControlStateNormal + UIControlStateSelected 都需要设置)
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor],
+                                                        NSFontAttributeName            : [UIFont fontWithName:@"Avenir-BookOblique" size:8.f]}
+                                             forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],
+                                                        NSFontAttributeName            : [UIFont fontWithName:@"Avenir-BookOblique" size:8.f]}
+                                             forState:UIControlStateSelected];
+    
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers     = @[firstController, secondController, thirdController];
+    
+#pragma mark - 修改tabBar背景色
+#if 0
+    
+    // 修改tabBar背景色 (没办法设置透明度, 没办法去除顶部的灰色线条)
+    tabBarController.tabBar.barTintColor = [UIColor yellowColor];
+    
+#elif 1
+    
+    // 修改tabBar背景色 + 去除顶部线条
+    [[UITabBar appearance] setBackgroundImage:[[[UIColor yellowColor] colorWithAlphaComponent:0.5f] imageWithFrame:CGRectMake(0, 0, 10, 10)]];
+    [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
+#elif 0
+    
+    tabBarController.tabBar.barStyle = UIBarStyleDefault;
+    
+#else
+    
+#endif
+    
+    window.rootViewController = tabBarController;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
